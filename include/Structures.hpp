@@ -18,16 +18,12 @@ struct ShipSegment {
     Coordinates coord;
     SegmentStatus status;
     ShipSegment() : coord({ 0, 0 }), status(SegmentStatus::INTACT) {}
-    ShipSegment(Coordinates coord, SegmentStatus status) : coord(coord), status(status) {}
-
-    bool operator==(const ShipSegment& other) const {
-        return (coord == other.coord) && (status == other.status);
-    }
 };
 
 struct FieldCell {
     Coordinates coord;
     CellStatus status;
     CellValue value;
-    ShipSegment* shipSegment = nullptr;
+    ShipSegment* shipSegment;
+    FieldCell(Coordinates coords) : coord(coords), status(CellStatus::HIDDEN), value(CellValue::Empty), shipSegment(nullptr){}
 };

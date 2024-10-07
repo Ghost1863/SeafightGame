@@ -19,10 +19,12 @@ public:
 	GameField(GameField&& other);
 	GameField& operator=(GameField&& other);
 
-	void drawField();
+	int getWidth();
+	int getHeight();
+	std::vector<FieldCell> getField();
+
 	bool checkCurrentCoord(int x, int y);
 	bool checkCoordsAround(int x, int y);
 	void setShip(Coordinates coords, Ship* ship, bool isVertical);
-	void setAllShips(std::vector<Ship*> ships);
 	void attackCell(Coordinates coords);
 };

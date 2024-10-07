@@ -10,17 +10,18 @@ private:
     int length;
     bool isPlaced = false;
     bool isVertical = false;
-    std::vector<ShipSegment*> segments;
+    std::vector<ShipSegment> segments;
 
 public:
     Ship(int shipLength);
-    ~Ship();
+
     int getLength();
-    std::vector<ShipSegment*> getSegments();
+    ShipSegment* getSegment(int index);
     bool getIsPlaced();
     bool getIsVertical();
-    bool isVerticalOrientation();
 
     void setIsPlaced(bool isPlaced);
     void setIsVertical(bool isVertical);
+
+    void attackHandling();
 };
