@@ -24,6 +24,10 @@ bool Ship::getIsPlaced() {
     return isPlaced;
 }
 
+bool Ship::getIsDestroyed() {
+    return isDestroyed;
+}
+
 void Ship::setIsPlaced(bool isPlaced) {
     this->isPlaced = isPlaced;
 }
@@ -31,3 +35,7 @@ void Ship::setIsPlaced(bool isPlaced) {
 void Ship::setIsVertical(bool isVertical) {
     this->isVertical = isVertical;
 }   
+
+void Ship::setIsDestroyed(bool isDestroyed) {
+    this->isDestroyed = isDestroyed;
+}

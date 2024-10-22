@@ -1,6 +1,10 @@
-#pragma once
+#ifndef GAME_FIELD_HPP
+#define GAME_FIELD_HPP
+
 #include "Ship.hpp"
-#include "Structures.hpp"
+#include "FieldCell.hpp"
+#include "ShipSegment.hpp"
+#include "AttackOutOfBoundsException.hpp"
 #include <vector>
 #include <iostream>
 
@@ -21,10 +25,13 @@ public:
 
 	int getWidth();
 	int getHeight();
-	std::vector<FieldCell> getField();
+	FieldCell& getFieldCell(Coordinates coords);
 
 	bool checkCurrentCoord(int x, int y);
 	bool checkCoordsAround(int x, int y);
 	void setShip(Coordinates coords, Ship* ship, bool isVertical);
 	void attackCell(Coordinates coords);
+	bool surroundShipIfDestroyed(FieldCell* cell);
 };
+
+#endif

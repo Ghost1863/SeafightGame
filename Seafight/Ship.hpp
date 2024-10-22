@@ -1,8 +1,9 @@
-#pragma once
-#include "Structures.hpp"
+#ifndef SHIP_HPP
+#define SHIP_HPP
+
+#include "ShipSegment.hpp"
 #include <string>
 #include <vector>
-
 
 class Ship {
 
@@ -10,6 +11,7 @@ private:
     int length;
     bool isPlaced = false;
     bool isVertical = false;
+    bool isDestroyed = false;
     std::vector<ShipSegment> segments;
 
 public:
@@ -19,9 +21,11 @@ public:
     ShipSegment* getSegment(int index);
     bool getIsPlaced();
     bool getIsVertical();
+    bool getIsDestroyed();
 
     void setIsPlaced(bool isPlaced);
     void setIsVertical(bool isVertical);
-
-    void attackHandling();
+    void setIsDestroyed(bool isDestroyed);
 };
+
+#endif

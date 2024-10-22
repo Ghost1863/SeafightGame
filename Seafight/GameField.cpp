@@ -1,7 +1,4 @@
 #include "GameField.hpp"
-#include <random>
-#include <chrono>
-
 
 GameField::GameField(int gf_width, int gf_height) {
 	width = gf_width;
@@ -49,9 +46,34 @@ int  GameField::getWidth() {
 int  GameField::getHeight() {
 	return height;
 }
-std::vector<FieldCell>  GameField::getField() {
-	return field;
-}
+FieldCell& GameField::getFieldCell(Coordinates coords) {
+	return field[coords.x + coords.y * width];
+}	
+
+//std::vector<FieldCell*> GameField::getCellsForDoubleDamage(Coordinates coords) {
+//	std::vector<FieldCell*> cells;
+//	if (checkCurrentCoord(coords.x,coords.y)) {
+//		cells.push_back(&getFieldCell(coords));
+//	}
+//	return cells;
+//}
+//std::vector<FieldCell*> GameField::getCellsForScanner(Coordinates coords) {
+//	std::vector<FieldCell*> cells;
+//	
+//	return cells;
+//}
+//std::vector<FieldCell*> GameField::getCellsForRandomDamage() {
+//	std::vector<FieldCell*> cells;
+//	for (int y = 0; y < height; y++) {
+//		for (int x = 0; x < width; x++) {
+//			if (field[x + y * width].value == CellValue::ShipSegment &&
+//				field[x + y * width].shipSegment->status!=SegmentStatus::DESTROYED) {
+//				cells.push_back(&field[x + y * width]);
+//			}
+//		}
+//	}
+//	return cells;
+//}
 
 bool GameField::checkCurrentCoord(int x, int y) {
 	if (x<0 || x>width - 1 || y<0 || y>height - 1) {
@@ -96,6 +118,7 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 		ship->getSegment(0)->coord = Coordinates{coords.x ,coords.y};
 		field[coords.x + coords.y * width].shipSegment = ship->getSegment(0);
 		field[coords.x + (coords.y) * width].value = CellValue::ShipSegment;
+		field[coords.x + (coords.y) * width].ship = ship;
 	}
 	else {
 		return;
@@ -111,6 +134,7 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 			ship->getSegment(i)->coord = Coordinates{ coords.x ,coords.y + i };
 			field[coords.x + (coords.y + i) * width].shipSegment = ship->getSegment(i);
 			field[coords.x + (coords.y + i) * width].value = CellValue::ShipSegment;
+			field[coords.x + (coords.y + i) * width].ship = ship;
 		}
 	}
 	else {
@@ -120,32 +144,56 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 			ship->getSegment(i)->coord = Coordinates{ coords.x + i,coords.y };
 			field[coords.x + i + (coords.y * width)].shipSegment = ship->getSegment(i);
 			field[coords.x + i + (coords.y * width)].value = CellValue::ShipSegment;
+			field[coords.x + i + (coords.y * width)].ship = ship;
 		}
 	}
 }
 
+
 void GameField::attackCell(Coordinates coords) {
 	if (!checkCurrentCoord(coords.x, coords.y)) {
-		return;
+		throw AttackOutOfBoundsException();
 	}
 	FieldCell& cell = field[coords.x + coords.y * width];
 	cell.status = CellStatus::DISCLOSED;
-
 	switch (cell.value)
 	{
-	case CellValue::Empty:
+	case CellValue::Empty: {
 		cell.value = CellValue::Miss;
 		break;
-	case CellValue::ShipSegment: {
-		if (cell.shipSegment->status == SegmentStatus::INTACT) {
-			cell.shipSegment->status = SegmentStatus::DAMAGED;
-		}
-		else if(cell.shipSegment->status==SegmentStatus::DAMAGED){
-			cell.shipSegment->status = SegmentStatus::DESTROYED;
+	}
+	case CellValue::ShipSegment:{
+		if (cell.shipSegment->handleDamage()) {
+			surroundShipIfDestroyed(&cell);
 		}
 		break;
 	}
 	default:
 		break;
 	}
+}
+bool GameField::surroundShipIfDestroyed(FieldCell* cell) {
+	std::vector <Coordinates> coords;
+	for (int i = 0; i < cell->ship->getLength(); i++)
+	{
+		if (cell->ship->getSegment(i)->status == SegmentStatus::DESTROYED)
+			coords.push_back(cell->ship->getSegment(i)->coord);
+		else
+			return false;
+	}
+
+	for (auto coord : coords) {
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if (checkCurrentCoord(coord.x + i, coord.y + j)) {
+					if (field[coord.x + i + (coord.y + j) * width].value != CellValue::ShipSegment) {
+						field[coord.x + i + (coord.y + j) * width].value = CellValue::Miss;
+						field[coord.x + i + (coord.y + j) * width].status = CellStatus::DISCLOSED;
+					}
+				}
+			}
+		}
+	}
+	cell->ship->setIsDestroyed(true);
+	return true;
 }

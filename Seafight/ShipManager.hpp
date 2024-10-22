@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHIP_MANAGER_HPP
+#define SHIP_MANAGER_HPP
+
 #include "Ship.hpp"
 
 class ShipManager {
@@ -12,5 +14,6 @@ public:
     int getShipsAmount();
     Ship* getShip(int index);
     Ship& getShipByCoordinates(Coordinates coords);
-
 };
+
+#endif

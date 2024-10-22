@@ -1,9 +1,12 @@
-#pragma once
+#ifndef RANDOMIZER_HPP
+#define RANDOMIZER_HPP
+
 #include "GameField.hpp"
+#include "AbilityManager.hpp"
 #include <random>
 #include <chrono>
 
-class ShipPlacer {
+class Randomizer {
 private:
     std::mt19937 gen;
     std::uniform_int_distribution<int> distr;
@@ -13,6 +16,9 @@ private:
     bool getRandomBool();
 
 public:
-    ShipPlacer();
+    Randomizer();
     void placeShipRandomly(GameField& field, Ship* ship);
+    void giveRandomAbility(AbilityManager& abilityManager);
 };
+
+#endif
