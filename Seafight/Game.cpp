@@ -1,48 +1,70 @@
 #include "Game.hpp"
 
 void Game::startGame(){
-    GameField field(10, 10);
+    GameField field1(10, 10);
     GameField field2(10, 10);
     std::vector<int> sizes = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
-    ShipManager shipManager(sizes);
+    ShipManager shipManager1(sizes);
+    ShipManager shipManager2(sizes);
     ConsoleDisplayer displayer;
+    InputHandler inputHandler;
     Randomizer randomizer;
     AbilityManager abilityManager;
 
-   // for (int i = 0; i < shipManager.getShipsAmount(); i++) {
-       // randomizer.placeShipRandomly(field, shipManager.getShip(i));
-    //}
-    field2.setShip(Coordinates{ 1,1 }, shipManager.getShip(0), true);
-    //field.setShip(Coordinates{ 5,5 }, shipManager.getShip(1), false);
+    for (int i = 0; i < shipManager1.getShipsAmount(); i++) {
+       randomizer.placeShipRandomly(field1, shipManager1.getShip(i));
+    }
+    field2.setShip(Coordinates{ 1,1 }, shipManager2.getShip(0), true);
+    field2.setShip(Coordinates{ 5,5 }, shipManager2.getShip(3), false);
     
-    try {
-        field2.attackCell(Coordinates{ 1,1 });
-        field2.attackCell(Coordinates{ 1,2 });
-        field2.attackCell(Coordinates{ 1,3 });
-        field2.attackCell(Coordinates{ 1,4 });
-        field2.attackCell(Coordinates{ 1,1 });
-        field2.attackCell(Coordinates{ 1,2 });
-        field2.attackCell(Coordinates{ 1,3 });
-        //field2.attackCell(Coordinates{ 1,4 });
-    }
-    catch(AttackOutOfBoundsException& e){
-        displayer.displayException(e);
-    }
-
-    auto& cell1 = field2.getFieldCell(Coordinates{ 1,1 });
-    auto& cell2 = field2.getFieldCell(Coordinates{ 1,2 });
-    std::vector<FieldCell*> cells;
-    //cells.push_back(&cell1);
-    //cells.push_back(&cell2);
-
-    try {
-       abilityManager.useAbility(field,{1,1});
-       abilityManager.useAbility(field2, { 2,2 });
-    }
-    catch(NoAbilitiesException& e){
-        displayer.displayException(e);
-    }
-
-    displayer.displayTwoFields(field, field2);
+    displayer.displayTwoFields(field1, field2);
     displayer.displayAbilities(abilityManager);
+
+    while (!shipManager2.allShipsDestroyed()) {
+        displayer.displayAttackOrAbilityChoice();
+        int userChoice=inputHandler.handleAttackorAbility();
+        try {
+            switch (userChoice)
+            {
+            case 1: {
+                displayer.displayWaitingCoordinatesInput();
+                Coordinates attackCoords = inputHandler.handleCoordsInput();
+                if (field2.attackCell(attackCoords)) {
+                    randomizer.giveRandomAbility(abilityManager);
+                }
+                break;
+            }
+            case 2: {
+                abilityManager.checkAbilitiesEmpty();
+                if (abilityManager.getAbility(0).getAbilityType() == Abilities::RandomHit) {
+                    if (abilityManager.useAbility(field2, { 1,1 })) {
+                        randomizer.giveRandomAbility(abilityManager);
+                    }
+                }
+                else {
+                    displayer.displayWaitingCoordinatesInput();
+                    Coordinates abilityCoords = inputHandler.handleCoordsInput();
+                    if (abilityManager.useAbility(field2, abilityCoords)) {
+                        randomizer.giveRandomAbility(abilityManager);
+                    }
+                }
+                break;
+            }
+            default:
+                displayer.displayUnknownCommandMessage();
+                continue;
+                break;
+            }
+        }
+        catch (NoAbilitiesException& e) {
+            displayer.displayException(e);
+            continue;
+        }
+        catch (AttackOutOfBoundsException& e) {
+            displayer.displayException(e);
+            continue;
+        }
+        displayer.displayTwoFields(field1, field2);
+        displayer.displayAbilities(abilityManager);
+    }
 }

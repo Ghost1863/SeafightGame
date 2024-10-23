@@ -150,7 +150,7 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 }
 
 
-void GameField::attackCell(Coordinates coords) {
+bool GameField::attackCell(Coordinates coords) {
 	if (!checkCurrentCoord(coords.x, coords.y)) {
 		throw AttackOutOfBoundsException();
 	}
@@ -164,13 +164,16 @@ void GameField::attackCell(Coordinates coords) {
 	}
 	case CellValue::ShipSegment:{
 		if (cell.shipSegment->handleDamage()) {
-			surroundShipIfDestroyed(&cell);
+			if (surroundShipIfDestroyed(&cell)) {
+				return true;
+			}
 		}
 		break;
 	}
 	default:
 		break;
 	}
+	return false;
 }
 bool GameField::surroundShipIfDestroyed(FieldCell* cell) {
 	std::vector <Coordinates> coords;

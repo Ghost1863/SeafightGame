@@ -10,17 +10,19 @@ int ShipManager::getShipsAmount() {
     return ships.size();
 }
 
+bool ShipManager::allShipsDestroyed() {
+    for (auto& ship : ships) {
+        if (!ship.getIsPlaced()) {
+            continue;
+        }
+        if (!ship.getIsDestroyed()) {
+            return false;
+        }
+    }
+    return true;
+}
+
 Ship* ShipManager::getShip(int index) {
     return &ships[index];
 }
 
-Ship& ShipManager::getShipByCoordinates(Coordinates coords) {
-    for (auto& ship : ships) {
-        for (int i = 0; i < ship.getLength(); i++)
-        {
-            if (ship.getSegment(i)->coord == coords) {
-                return ship;
-            }
-        }
-    }
-}

@@ -1,13 +1,15 @@
 #include "DoubleDamage.hpp"
 
-void DoubleDamage::useAbility(GameField& gf,Coordinates coords) {
+bool DoubleDamage::useAbility(GameField& gf,Coordinates coords) {
+	if (!gf.checkCurrentCoord(coords.x, coords.y)) {
+		throw AttackOutOfBoundsException();
+	}
 	gf.attackCell(coords);
-	gf.attackCell(coords);
+	if (gf.attackCell(coords)) {
+		return true;
+	}
+	return false;
 }
-
-//Ability* DoubleDamage::createAbility(Abilities ability) {
-//	return new DoubleDamage;
-//}
 
 Abilities DoubleDamage::getAbilityType() {
 	return Abilities::DoubleDamage;

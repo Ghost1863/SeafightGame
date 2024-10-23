@@ -7,8 +7,7 @@ class Scanner : public Ability {
 private:
 	Coordinates coords;
 public:
-	void useAbility(GameField& field, Coordinates coords) override final;
-	//Ability* createAbility(Abilities ability) override;
+	bool useAbility(GameField& field, Coordinates coords) override final;
 	virtual Abilities getAbilityType() override final;
 };
 

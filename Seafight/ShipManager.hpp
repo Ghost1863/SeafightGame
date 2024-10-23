@@ -12,8 +12,10 @@ public:
     ShipManager(std::vector<int> sizes);
     
     int getShipsAmount();
+    bool allShipsDestroyed();
+
     Ship* getShip(int index);
-    Ship& getShipByCoordinates(Coordinates coords);
+
 };
 
 #endif

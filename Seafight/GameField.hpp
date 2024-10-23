@@ -30,7 +30,7 @@ public:
 	bool checkCurrentCoord(int x, int y);
 	bool checkCoordsAround(int x, int y);
 	void setShip(Coordinates coords, Ship* ship, bool isVertical);
-	void attackCell(Coordinates coords);
+	bool attackCell(Coordinates coords);
 	bool surroundShipIfDestroyed(FieldCell* cell);
 };
 

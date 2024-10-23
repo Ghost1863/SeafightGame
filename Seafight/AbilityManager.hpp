@@ -13,11 +13,12 @@ public:
     AbilityManager();
     ~AbilityManager();
 
-    int getAbilitiesAmount();
+    int getAbilitiesSize();
     Ability& getAbility(int index);
 
+    void checkAbilitiesEmpty();
     void addAbility(Ability* ability);
-    void useAbility(GameField& gf, Coordinates coords);
+    bool useAbility(GameField& gf, Coordinates coords);
 };
 
 #endif

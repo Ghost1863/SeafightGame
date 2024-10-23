@@ -83,7 +83,8 @@ void ConsoleDisplayer::drawUpNumbers(int amount)  const noexcept {
 	for (int i = 0; i < amount; i++)
 	{
 		setColor(36);
-		std::cout << "  " << static_cast<char>('A' + i) << " ";
+		//std::cout << "  " << static_cast<char>('A' + i) << " ";
+		std::cout << "  " << i << " ";
 	}
 	resetColor();
 }
@@ -178,22 +179,42 @@ void ConsoleDisplayer::displayShipsInfo(ShipManager& sm) const noexcept {
 }
 
 void ConsoleDisplayer::displayAbilities(AbilityManager& am) const noexcept {
-	for (int i = 0; i < am.getAbilitiesAmount()+1; i++)
+	std::cout << "Abilities available:\n";
+	if (am.getAbilitiesSize() == 0) {
+		std::cout << "No abilities\n";
+	}
+	for (int i = 0; i < am.getAbilitiesSize(); i++)
 	{	
-		std::cout << i << '.';
+		setColor(32);
+		std::cout << i+1 << '.';
+		resetColor();
 		switch (am.getAbility(i).getAbilityType())
 		{
-		case Abilities::DoubleDamage : std::cout << "Double Damage\n"; break;
-		case Abilities::RandomHit : std::cout << "Random Hit\n"; break;
-		case Abilities::Scanner : std::cout << "Scanner\n"; break;
+		case Abilities::DoubleDamage : std::cout << "Double Damage "; break;
+		case Abilities::RandomHit : std::cout << "Random Hit "; break;
+		case Abilities::Scanner : std::cout << "Scanner "; break;
 		default:
 			break;
 		}
-		
 	}
+	std::cout << "\n\n";
 }
 
 void ConsoleDisplayer::displayException(std::exception& e) {
 	std::cerr << "Exception caught: " << e.what() << std::endl;
+}
+
+void ConsoleDisplayer::displayAttackOrAbilityChoice() {
+	setColor(35);
+	std::cout << "Press 1 to attack\nPress 2 to use ability\n\n";
+	resetColor();
+}
+
+void ConsoleDisplayer::displayWaitingCoordinatesInput() {
+	std::cout << "Enter coordinates with space: ";
+}
+
+void ConsoleDisplayer::displayUnknownCommandMessage() {
+	std::cout << "Unknown command\n";
 }
 

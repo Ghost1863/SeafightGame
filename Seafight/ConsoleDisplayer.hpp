@@ -28,6 +28,9 @@ public:
 	void displayShipsInfo(ShipManager& sm)const noexcept;
 	void displayAbilities(AbilityManager& am) const noexcept;
 	void displayException(std::exception& e);
+	void displayAttackOrAbilityChoice();
+	void displayWaitingCoordinatesInput();
+	void displayUnknownCommandMessage();
 };
 
 #endif

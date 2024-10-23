@@ -10,7 +10,7 @@ AbilityManager::AbilityManager() {
     abilities.push_back(new RandomHit);
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     auto rng = std::default_random_engine(seed);
-   // std::shuffle(std::begin(abilities), std::end(abilities), rng);
+    std::shuffle(std::begin(abilities), std::end(abilities), rng);
 }
 
 AbilityManager::~AbilityManager() {
@@ -19,8 +19,8 @@ AbilityManager::~AbilityManager() {
     }
 }
 
-int AbilityManager::getAbilitiesAmount() {
-    return abilities.size() - 1;
+int AbilityManager::getAbilitiesSize() {
+    return abilities.size();
 }
 
 Ability& AbilityManager::getAbility(int index) {
@@ -31,11 +31,14 @@ void AbilityManager::addAbility(Ability* ability) {
     abilities.push_back(ability);
 }
 
-void AbilityManager::useAbility(GameField& gf, Coordinates coords) {
-    if (!abilities.empty()) {
-        abilities[0]->useAbility(gf,coords);
-        abilities.erase(abilities.begin());
+void AbilityManager::checkAbilitiesEmpty() {
+    if (abilities.empty()) {
+        throw NoAbilitiesException();
     }
-    else throw NoAbilitiesException();
+}
+bool AbilityManager::useAbility(GameField& gf, Coordinates coords) {
+        bool wasShipDestroyed=abilities[0]->useAbility(gf,coords);
+        abilities.erase(abilities.begin());
+        return wasShipDestroyed;
 }
 

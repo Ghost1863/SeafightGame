@@ -6,8 +6,11 @@
 #include "ConsoleDisplayer.hpp"
 #include "Randomizer.hpp"
 #include "AbilityManager.hpp"
+#include "InputHandler.hpp"
 
 class Game {
+private:
+
 public:
 	void startGame();
 };
