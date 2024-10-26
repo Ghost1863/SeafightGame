@@ -6,7 +6,6 @@
 class RandomHit :public Ability {
 public:
 	bool useAbility(GameField& field, Coordinates coords)  override final;
-	virtual Abilities getAbilityType() override final;
 };
 
 #endif

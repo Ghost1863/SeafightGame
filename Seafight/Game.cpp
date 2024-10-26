@@ -9,7 +9,7 @@ void Game::startGame(){
     ConsoleDisplayer displayer;
     InputHandler inputHandler;
     Randomizer randomizer;
-    AbilityManager abilityManager;
+    AbilityManager abilityManager(field2);
 
     for (int i = 0; i < shipManager1.getShipsAmount(); i++) {
        randomizer.placeShipRandomly(field1, shipManager1.getShip(i));
@@ -30,22 +30,22 @@ void Game::startGame(){
                 displayer.displayWaitingCoordinatesInput();
                 Coordinates attackCoords = inputHandler.handleCoordsInput();
                 if (field2.attackCell(attackCoords)) {
-                    randomizer.giveRandomAbility(abilityManager);
+                    randomizer.giveRandomAbilityCreator(abilityManager);
                 }
                 break;
             }
             case 2: {
                 abilityManager.checkAbilitiesEmpty();
-                if (abilityManager.getAbility(0).getAbilityType() == Abilities::RandomHit) {
-                    if (abilityManager.useAbility(field2, { 1,1 })) {
-                        randomizer.giveRandomAbility(abilityManager);
+                if (abilityManager.getAbility(0).getCreatorType() == Abilities::RandomHit) {
+                    if (abilityManager.useAbility({ 1,1 })) {
+                        randomizer.giveRandomAbilityCreator(abilityManager);
                     }
                 }
                 else {
                     displayer.displayWaitingCoordinatesInput();
                     Coordinates abilityCoords = inputHandler.handleCoordsInput();
-                    if (abilityManager.useAbility(field2, abilityCoords)) {
-                        randomizer.giveRandomAbility(abilityManager);
+                    if (abilityManager.useAbility(abilityCoords)) {
+                        randomizer.giveRandomAbilityCreator(abilityManager);
                     }
                 }
                 break;
@@ -60,7 +60,7 @@ void Game::startGame(){
             displayer.displayException(e);
             continue;
         }
-        catch (AttackOutOfBoundsException& e) {
+        catch (OutOfBoundsException& e) {
             displayer.displayException(e);
             continue;
         }

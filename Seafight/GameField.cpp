@@ -50,30 +50,6 @@ FieldCell& GameField::getFieldCell(Coordinates coords) {
 	return field[coords.x + coords.y * width];
 }	
 
-//std::vector<FieldCell*> GameField::getCellsForDoubleDamage(Coordinates coords) {
-//	std::vector<FieldCell*> cells;
-//	if (checkCurrentCoord(coords.x,coords.y)) {
-//		cells.push_back(&getFieldCell(coords));
-//	}
-//	return cells;
-//}
-//std::vector<FieldCell*> GameField::getCellsForScanner(Coordinates coords) {
-//	std::vector<FieldCell*> cells;
-//	
-//	return cells;
-//}
-//std::vector<FieldCell*> GameField::getCellsForRandomDamage() {
-//	std::vector<FieldCell*> cells;
-//	for (int y = 0; y < height; y++) {
-//		for (int x = 0; x < width; x++) {
-//			if (field[x + y * width].value == CellValue::ShipSegment &&
-//				field[x + y * width].shipSegment->status!=SegmentStatus::DESTROYED) {
-//				cells.push_back(&field[x + y * width]);
-//			}
-//		}
-//	}
-//	return cells;
-//}
 
 bool GameField::checkCurrentCoord(int x, int y) {
 	if (x<0 || x>width - 1 || y<0 || y>height - 1) {
@@ -152,7 +128,7 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 
 bool GameField::attackCell(Coordinates coords) {
 	if (!checkCurrentCoord(coords.x, coords.y)) {
-		throw AttackOutOfBoundsException();
+		throw OutOfBoundsException();
 	}
 	FieldCell& cell = field[coords.x + coords.y * width];
 	cell.status = CellStatus::DISCLOSED;

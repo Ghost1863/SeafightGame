@@ -3,22 +3,24 @@
 
 #include "Ability.hpp"
 #include "NoAbilitiesException.hpp"
+#include "AbilityCreator.hpp"
 
 
 class AbilityManager {
 private:
-    std::vector <Ability*> abilities;
+    GameField& field;
+    std::vector <AbilityCreator*> abilities;
 
 public:
-    AbilityManager();
+    AbilityManager(GameField& field);
     ~AbilityManager();
 
     int getAbilitiesSize();
-    Ability& getAbility(int index);
+    AbilityCreator& getAbility(int index);
 
     void checkAbilitiesEmpty();
-    void addAbility(Ability* ability);
-    bool useAbility(GameField& gf, Coordinates coords);
+    void addAbilityCreator(AbilityCreator* ability);
+    bool useAbility(Coordinates coords);
 };
 
 #endif

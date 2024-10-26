@@ -1,7 +1,5 @@
 #include "Randomizer.hpp"
-#include "Scanner.hpp"
-#include "DoubleDamage.hpp"
-#include "RandomHit.hpp"
+#include "AbilityCreator.hpp"
 
 void Randomizer::placeShipRandomly(GameField& field, Ship* ship) {
     while (!ship->getIsPlaced()) {
@@ -26,21 +24,21 @@ bool Randomizer::getRandomBool() {
     return static_cast<bool>(distr_bool(gen));
 }
 
-void Randomizer::giveRandomAbility(AbilityManager& abilityManager) {
+void Randomizer::giveRandomAbilityCreator(AbilityManager& abilityManager) {
     std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
     int randomNumber = gen() % 3 + 1;
     switch (randomNumber)
     {
     case 1: {
-        abilityManager.addAbility(new DoubleDamage);
+        abilityManager.addAbilityCreator(new DoubleDamageCreator());
         break;
     }
     case 2: {
-        abilityManager.addAbility(new Scanner);
+        abilityManager.addAbilityCreator(new ScannerCreator());
         break;
     }
     case 3: {
-        abilityManager.addAbility(new RandomHit);
+        abilityManager.addAbilityCreator(new RandomHitCreator());
         break;
     }
     default:

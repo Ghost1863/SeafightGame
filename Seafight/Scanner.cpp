@@ -5,7 +5,7 @@ bool Scanner::useAbility(GameField& gf, Coordinates coords) {
 		Coordinates{ coords.x ,coords.y+1 }, Coordinates{ coords.x + 1,coords.y+1 }};
 	for (auto& curCoords : coordsForScan) {
 		if (!gf.checkCurrentCoord(curCoords.x, curCoords.y)) {
-			throw AttackOutOfBoundsException();
+			throw OutOfBoundsException();
 		}
 	}
 	for (auto& curCoords : coordsForScan) {
@@ -14,6 +14,3 @@ bool Scanner::useAbility(GameField& gf, Coordinates coords) {
 	return false;
 }
 
-Abilities Scanner::getAbilityType() {
-	return Abilities::Scanner;
-}

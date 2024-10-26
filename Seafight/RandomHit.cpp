@@ -23,7 +23,3 @@ bool RandomHit::useAbility(GameField& gf, Coordinates coords) {
 	}
 	return false;
 }
-
-Abilities RandomHit::getAbilityType() {
-	return Abilities::RandomHit;
-}

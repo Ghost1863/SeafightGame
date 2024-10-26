@@ -3,12 +3,12 @@
 
 #include <exception>
 #include <string>
-class AttackOutOfBoundsException : public std::exception {
+class OutOfBoundsException : public std::exception {
 private:
 	std::string message;
 
 public:
-	AttackOutOfBoundsException();
+	OutOfBoundsException();
 	virtual const char* what() const noexcept override;
 };
 

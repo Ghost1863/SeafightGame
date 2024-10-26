@@ -18,7 +18,7 @@ private:
 public:
     Randomizer();
     void placeShipRandomly(GameField& field, Ship* ship);
-    void giveRandomAbility(AbilityManager& abilityManager);
+    void giveRandomAbilityCreator(AbilityManager& abilityManager);
 };
 
 #endif

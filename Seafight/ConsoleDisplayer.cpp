@@ -188,7 +188,7 @@ void ConsoleDisplayer::displayAbilities(AbilityManager& am) const noexcept {
 		setColor(32);
 		std::cout << i+1 << '.';
 		resetColor();
-		switch (am.getAbility(i).getAbilityType())
+		switch (am.getAbility(i).getCreatorType())
 		{
 		case Abilities::DoubleDamage : std::cout << "Double Damage "; break;
 		case Abilities::RandomHit : std::cout << "Random Hit "; break;

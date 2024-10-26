@@ -4,7 +4,7 @@
 #include "Ship.hpp"
 #include "FieldCell.hpp"
 #include "ShipSegment.hpp"
-#include "AttackOutOfBoundsException.hpp"
+#include "OutOfBoundsException.hpp"
 #include <vector>
 #include <iostream>
 
@@ -17,6 +17,7 @@ private:
 	std::vector<FieldCell> field;
 
 public:
+
 	GameField(int width, int height);
 	GameField(const GameField& other);
 	GameField& operator=(const GameField& other);
