@@ -35,15 +35,15 @@ void Randomizer::giveRandomAbilityCreator(AbilityManager& abilityManager) {
     switch (randomNumber)
     {
     case 1: {
-        abilityManager.addAbilityCreator(new DoubleDamageCreator());
+        abilityManager.addAbilityCreator(Abilities::DoubleDamage);
         break;
     }
     case 2: {
-        abilityManager.addAbilityCreator(new ScannerCreator());
+        abilityManager.addAbilityCreator(Abilities::Scanner);
         break;
     }
     case 3: {
-        abilityManager.addAbilityCreator(new RandomHitCreator());
+        abilityManager.addAbilityCreator(Abilities::RandomHit);
         break;
     }
     default:

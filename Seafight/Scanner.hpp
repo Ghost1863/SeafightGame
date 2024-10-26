@@ -5,9 +5,11 @@
 
 class Scanner : public Ability {
 private:
+	GameField& field;
 	Coordinates coords;
 public:
-	bool useAbility(GameField& field, Coordinates coords) override final;
+	Scanner(GameField& field, Coordinates coords) :field(field), coords(coords) {};
+	AbilityResult useAbility() override final;
 };
 
 #endif

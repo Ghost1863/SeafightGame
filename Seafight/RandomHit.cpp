@@ -1,12 +1,12 @@
 #include "RandomHit.hpp"
 
-bool RandomHit::useAbility(GameField& gf, Coordinates coords) {
+AbilityResult RandomHit::useAbility() {
 	std::vector<Coordinates> coordsVector;
-	for (int y = 0; y < gf.getHeight(); y++) {
-		for (int x = 0; x < gf.getWidth(); x++) {
+	for (int y = 0; y < field.getHeight(); y++) {
+		for (int x = 0; x < field.getWidth(); x++) {
 			Coordinates curCoords ={ x,y };
-			if (gf.getFieldCell(curCoords).value == CellValue::ShipSegment &&
-				gf.getFieldCell(curCoords).shipSegment->status != SegmentStatus::DESTROYED) {
+			if (field.getFieldCell(curCoords).value == CellValue::ShipSegment &&
+				field.getFieldCell(curCoords).shipSegment->status != SegmentStatus::DESTROYED) {
 				coordsVector.push_back(curCoords);
 			}
 		}
@@ -15,11 +15,11 @@ bool RandomHit::useAbility(GameField& gf, Coordinates coords) {
 		std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
 		std::uniform_int_distribution<> dis(0, coordsVector.size() - 1);
 		int random_number = dis(gen);
-		auto& cell = gf.getFieldCell(coordsVector[random_number]);
+		auto& cell = field.getFieldCell(coordsVector[random_number]);
 		cell.shipSegment->handleDamage();
-		if (gf.surroundShipIfDestroyed(&cell)) {
-			return true;
+		if (field.surroundShipIfDestroyed(&cell)) {
+			return AbilityResult::ShipDestroyed;
 		}
 	}
-	return false;
+	return AbilityResult::ShipNotDestroyed;
 }

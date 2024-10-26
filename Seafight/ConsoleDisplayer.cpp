@@ -188,7 +188,7 @@ void ConsoleDisplayer::displayAbilities(AbilityManager& am) const noexcept {
 		setColor(32);
 		std::cout << i+1 << '.';
 		resetColor();
-		switch (am.getAbility(i).getCreatorType())
+		switch (am.getAbility(i))
 		{
 		case Abilities::DoubleDamage : std::cout << "Double Damage "; break;
 		case Abilities::RandomHit : std::cout << "Random Hit "; break;
@@ -216,5 +216,16 @@ void ConsoleDisplayer::displayWaitingCoordinatesInput() {
 
 void ConsoleDisplayer::displayUnknownCommandMessage() {
 	std::cout << "Unknown command\n";
+}
+
+void ConsoleDisplayer::displaySegmentWasFoundMessage() {
+	setColor(32);
+	std::cout << "Segment/Segments were found\n";
+	resetColor();
+}
+void ConsoleDisplayer::displaySegmentWasNotFoundMessage() {
+	setColor(31);
+	std::cout << "Segment/Segments were not found\n";
+	resetColor();
 }
 

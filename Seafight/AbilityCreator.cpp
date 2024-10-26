@@ -4,7 +4,7 @@
 #include "Scanner.hpp"
 
 Ability* RandomHitCreator::createAbility() {
-	return new RandomHit();
+	return new RandomHit(field);
  }
 
 Abilities RandomHitCreator::getCreatorType() {
@@ -12,7 +12,7 @@ Abilities RandomHitCreator::getCreatorType() {
 }
 
 Ability* DoubleDamageCreator::createAbility() {
-	return new DoubleDamage();
+	return new DoubleDamage(field,coords);
 }
 
 Abilities DoubleDamageCreator::getCreatorType() {
@@ -20,7 +20,7 @@ Abilities DoubleDamageCreator::getCreatorType() {
 }
 
 Ability* ScannerCreator::createAbility() {
-	return new Scanner();
+	return new Scanner(field,coords);
 }
 
 Abilities ScannerCreator::getCreatorType() {

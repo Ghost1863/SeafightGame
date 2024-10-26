@@ -4,8 +4,11 @@
 #include "Ability.hpp"
 
 class RandomHit :public Ability {
+private:
+	GameField& field;
 public:
-	bool useAbility(GameField& field, Coordinates coords)  override final;
+	RandomHit(GameField& field) :field(field) {};
+	AbilityResult useAbility()  override final;
 };
 
 #endif

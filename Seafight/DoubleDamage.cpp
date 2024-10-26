@@ -1,12 +1,12 @@
 #include "DoubleDamage.hpp"
 
-bool DoubleDamage::useAbility(GameField& gf,Coordinates coords) {
-	if (!gf.checkCurrentCoord(coords.x, coords.y)) {
+AbilityResult DoubleDamage::useAbility() {
+	if (!field.checkCurrentCoord(coords.x, coords.y)) {
 		throw OutOfBoundsException();
 	}
-	gf.attackCell(coords);
-	if (gf.attackCell(coords)) {
-		return true;
+	field.attackCell(coords);
+	if (field.attackCell(coords)) {
+		return AbilityResult::ShipDestroyed;
 	}
-	return false;
+	return AbilityResult::ShipNotDestroyed;
 }

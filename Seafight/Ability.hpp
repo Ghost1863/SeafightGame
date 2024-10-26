@@ -5,10 +5,11 @@
 #include<chrono>
 #include<random>
 
+enum class AbilityResult { ShipDestroyed, SegmentDetected,SegmentNotFound,ShipNotDestroyed };
 
 class Ability {
 public:
-	virtual bool useAbility(GameField& field, Coordinates coords) = 0;
+	virtual AbilityResult useAbility() = 0;
 	virtual ~Ability() {}
 };
 

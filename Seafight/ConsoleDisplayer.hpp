@@ -31,6 +31,8 @@ public:
 	void displayAttackOrAbilityChoice();
 	void displayWaitingCoordinatesInput();
 	void displayUnknownCommandMessage();
+	void displaySegmentWasFoundMessage();
+	void displaySegmentWasNotFoundMessage();
 };
 
 #endif

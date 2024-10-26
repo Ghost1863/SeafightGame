@@ -1,16 +1,17 @@
 #include "Scanner.hpp"
 
-bool Scanner::useAbility(GameField& gf, Coordinates coords) {
+AbilityResult Scanner::useAbility() {
 	std::vector <Coordinates> coordsForScan {coords, Coordinates{ coords.x + 1,coords.y },
 		Coordinates{ coords.x ,coords.y+1 }, Coordinates{ coords.x + 1,coords.y+1 }};
 	for (auto& curCoords : coordsForScan) {
-		if (!gf.checkCurrentCoord(curCoords.x, curCoords.y)) {
+		if (!field.checkCurrentCoord(curCoords.x, curCoords.y)) {
 			throw OutOfBoundsException();
 		}
 	}
 	for (auto& curCoords : coordsForScan) {
-		gf.getFieldCell(curCoords).status = CellStatus::DISCLOSED;
+		if (field.getFieldCell(curCoords).value == CellValue::ShipSegment)
+			return AbilityResult::SegmentDetected;
 	}
-	return false;
+	return AbilityResult::SegmentNotFound;
 }
 

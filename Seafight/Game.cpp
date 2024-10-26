@@ -41,16 +41,23 @@ void Game::startGame(){
             }
             case 2: {
                 abilityManager.checkAbilitiesEmpty();
-                if (abilityManager.getAbility(0).getCreatorType() == Abilities::RandomHit) {
-                    if (abilityManager.useAbility({ 1,1 })) {
+                if (abilityManager.getAbility(0) == Abilities::RandomHit) {
+                    if (abilityManager.useAbility()==AbilityResult::ShipDestroyed) {
                         randomizer.giveRandomAbilityCreator(abilityManager);
                     }
                 }
                 else {
                     displayer.displayWaitingCoordinatesInput();
                     Coordinates abilityCoords = inputHandler.handleCoordsInput();
-                    if (abilityManager.useAbility(abilityCoords)) {
+                    AbilityResult result = abilityManager.useAbilityByCoords(abilityCoords);
+                    if (result==AbilityResult::ShipDestroyed) {
                         randomizer.giveRandomAbilityCreator(abilityManager);
+                    }
+                    else if (result == AbilityResult::SegmentDetected) {
+                        displayer.displaySegmentWasFoundMessage();
+                    }
+                    else if(result==AbilityResult::SegmentNotFound) {
+                        displayer.displaySegmentWasNotFoundMessage();
                     }
                 }
                 break;
@@ -66,6 +73,10 @@ void Game::startGame(){
             continue;
         }
         catch (OutOfBoundsException& e) {
+            displayer.displayException(e);
+            continue;
+        }
+        catch (AbilityCoordsRequiredException& e) {
             displayer.displayException(e);
             continue;
         }

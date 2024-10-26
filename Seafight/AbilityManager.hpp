@@ -3,24 +3,26 @@
 
 #include "Ability.hpp"
 #include "NoAbilitiesException.hpp"
+#include "AbilityCoordsRequiredException.hpp"
 #include "AbilityCreator.hpp"
 #include <queue>
 
 class AbilityManager {
 private:
     GameField& field;
-    std::queue <AbilityCreator*> abilities;
+    std::queue <Abilities> abilities;
 
 public:
     AbilityManager(GameField& field);
     ~AbilityManager();
 
     int getAbilitiesSize();
-    AbilityCreator& getAbility(int index);
+    Abilities getAbility(int index);
 
     void checkAbilitiesEmpty();
-    void addAbilityCreator(AbilityCreator* ability);
-    bool useAbility(Coordinates coords);
+    void addAbilityCreator(Abilities ability);
+    AbilityResult useAbilityByCoords(Coordinates coords);
+    AbilityResult useAbility();
 };
 
 #endif
