@@ -1,7 +1,7 @@
 #include "ShipsIntersectionException.hpp"
 
 ShipsIntersectionException::ShipsIntersectionException() {
-    message = "Ships are placed too close"; 
+    message = "Ships are placed too close or out of bounds"; 
 }
 
 const char* ShipsIntersectionException::what() const noexcept {

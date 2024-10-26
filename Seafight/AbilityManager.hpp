@@ -4,12 +4,12 @@
 #include "Ability.hpp"
 #include "NoAbilitiesException.hpp"
 #include "AbilityCreator.hpp"
-
+#include <queue>
 
 class AbilityManager {
 private:
     GameField& field;
-    std::vector <AbilityCreator*> abilities;
+    std::queue <AbilityCreator*> abilities;
 
 public:
     AbilityManager(GameField& field);

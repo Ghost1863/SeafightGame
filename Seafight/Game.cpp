@@ -14,9 +14,14 @@ void Game::startGame(){
     for (int i = 0; i < shipManager1.getShipsAmount(); i++) {
        randomizer.placeShipRandomly(field1, shipManager1.getShip(i));
     }
-    field2.setShip(Coordinates{ 1,1 }, shipManager2.getShip(0), true);
-    field2.setShip(Coordinates{ 5,5 }, shipManager2.getShip(3), false);
-    
+    try {
+        field2.setShip(Coordinates{ 1,1 }, shipManager2.getShip(0), true);
+        field2.setShip(Coordinates{ 5,5 }, shipManager2.getShip(3), false);
+    }
+    catch (ShipsIntersectionException& e) {
+        displayer.displayException(e);
+    }
+
     displayer.displayTwoFields(field1, field2);
     displayer.displayAbilities(abilityManager);
 

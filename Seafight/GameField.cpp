@@ -89,7 +89,7 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 				ableToPlaceShip = checkCoordsAround(coords.x + i, coords.y);
 			}
 			if (!ableToPlaceShip)
-				return;
+				throw ShipsIntersectionException();
 		}
 		ship->getSegment(0)->coord = Coordinates{coords.x ,coords.y};
 		field[coords.x + coords.y * width].shipSegment = ship->getSegment(0);
@@ -97,7 +97,7 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 		field[coords.x + (coords.y) * width].ship = ship;
 	}
 	else {
-		return;
+		throw ShipsIntersectionException();
 	}
 
 	ship->setIsVertical(isVertical);

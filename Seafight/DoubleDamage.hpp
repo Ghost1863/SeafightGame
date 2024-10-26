@@ -4,8 +4,6 @@
 #include "Ability.hpp"
 
 class DoubleDamage : public Ability {
-private:
-	Coordinates coords;
 public:
 	bool useAbility(GameField& field, Coordinates coords) override final;
 };

@@ -5,6 +5,7 @@
 #include "FieldCell.hpp"
 #include "ShipSegment.hpp"
 #include "OutOfBoundsException.hpp"
+#include "ShipsIntersectionException.hpp"
 #include <vector>
 #include <iostream>
 

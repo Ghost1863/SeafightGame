@@ -3,9 +3,14 @@
 
 void Randomizer::placeShipRandomly(GameField& field, Ship* ship) {
     while (!ship->getIsPlaced()) {
-        Coordinates coord = getRandomCoordinates();
-        bool isVertical = getRandomBool();
-        field.setShip(coord, ship, isVertical);
+        try {
+            Coordinates coord = getRandomCoordinates();
+            bool isVertical = getRandomBool();
+            field.setShip(coord, ship, isVertical);
+        }
+        catch (ShipsIntersectionException& e) {
+            continue;
+        }
     }
 }
 
