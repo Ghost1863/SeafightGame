@@ -7,12 +7,10 @@ AbilityManager::AbilityManager(GameField& field) : field(field) {
     tempAbilities.push_back(Abilities::RandomHit);
     tempAbilities.push_back(Abilities::Scanner);
 
-    // Перемешиваем вектор
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     auto rng = std::default_random_engine(seed);
     std::shuffle(tempAbilities.begin(), tempAbilities.end(), rng);
 
-    // Перемещаем элементы из вектора в очередь
     for (auto ability : tempAbilities) {
         abilities.push(ability);
     }
@@ -46,16 +44,22 @@ void AbilityManager::checkAbilitiesEmpty() {
     }
 }
 AbilityResult AbilityManager::useAbilityByCoords(Coordinates coords) {
-    Abilities curAbility = abilities.front();
-    abilities.pop();
-    switch (curAbility)
+    switch (abilities.front())
     {
     case Abilities::DoubleDamage: {
-        return (new DoubleDamageCreator(field, coords))->createAbility()->useAbility();
+        Ability* curAbility = DoubleDamageCreator(field,coords).createAbility();
+        AbilityResult result=curAbility->useAbility();
+        delete(curAbility);
+        abilities.pop();
+        return result;
         break;
     }
     case Abilities::Scanner: {
-        return (new ScannerCreator(field, coords))->createAbility()->useAbility();
+        Ability* curAbility = ScannerCreator(field, coords).createAbility();
+        AbilityResult result =ScannerCreator(field, coords).createAbility()->useAbility();
+        delete(curAbility);
+        abilities.pop();
+        return result;
         break;
     }
     default:
@@ -63,13 +67,12 @@ AbilityResult AbilityManager::useAbilityByCoords(Coordinates coords) {
     }
 }
 AbilityResult AbilityManager::useAbility() {
-    Abilities curAbility = abilities.front();
-    abilities.pop();
-    if (curAbility == Abilities::RandomHit) {
-        return (new RandomHitCreator(field))->createAbility()->useAbility();
+    if (abilities.front() == Abilities::RandomHit) {
+        Ability* curAbility = RandomHitCreator(field).createAbility();
+        AbilityResult result = curAbility->useAbility();
+        delete(curAbility);
+        abilities.pop();
+        return result;
     }
-    else {
-        throw AbilityCoordsRequiredException();
-    }
-    
+
 }

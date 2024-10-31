@@ -2,4 +2,4 @@
 
 FieldCell::FieldCell(Coordinates coords) :
     coord(coords), status(CellStatus::HIDDEN),
-    value(CellValue::Empty), shipSegment(nullptr),ship(nullptr) {}
+    value(CellValue::Empty),segmentIndex(-1),ship(nullptr) {}

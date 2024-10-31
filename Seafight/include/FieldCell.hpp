@@ -13,7 +13,7 @@ struct FieldCell {
     CellStatus status;
     CellValue value;
     Ship* ship;
-    ShipSegment* shipSegment;
+    int segmentIndex;
 
     FieldCell(Coordinates coords);
 };

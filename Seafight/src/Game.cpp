@@ -76,10 +76,6 @@ void Game::startGame(){
             displayer.displayException(e);
             continue;
         }
-        catch (AbilityCoordsRequiredException& e) {
-            displayer.displayException(e);
-            continue;
-        }
         displayer.displayTwoFields(field1, field2);
         displayer.displayAbilities(abilityManager);
     }

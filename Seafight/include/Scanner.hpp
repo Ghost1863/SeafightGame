@@ -8,7 +8,7 @@ private:
 	GameField& field;
 	Coordinates coords;
 public:
-	Scanner(GameField& field, Coordinates coords) :field(field), coords(coords) {};
+	Scanner(GameField& field, Coordinates coords);
 	AbilityResult useAbility() override final;
 };
 

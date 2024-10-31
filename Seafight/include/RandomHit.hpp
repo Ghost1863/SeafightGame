@@ -7,7 +7,7 @@ class RandomHit :public Ability {
 private:
 	GameField& field;
 public:
-	RandomHit(GameField& field) :field(field) {};
+	RandomHit(GameField& field);
 	AbilityResult useAbility()  override final;
 };
 

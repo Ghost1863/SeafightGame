@@ -15,7 +15,7 @@ class RandomHitCreator : public AbilityCreator {
 private:
 	GameField& field;
 public:
-	RandomHitCreator(GameField& field) :field(field) {};
+	RandomHitCreator(GameField& field);
 	Ability* createAbility() override;
 	Abilities getCreatorType() override;
 };
@@ -25,7 +25,7 @@ private:
 	GameField& field;
 	Coordinates coords;
 public:
-	DoubleDamageCreator(GameField& field, Coordinates coords) : field(field), coords(coords) {};
+	DoubleDamageCreator(GameField& field, Coordinates coords);
 	Ability* createAbility() override;
 	Abilities getCreatorType() override;
 };
@@ -35,7 +35,7 @@ private:
 	GameField& field;
 	Coordinates coords;
 public:
-	ScannerCreator(GameField& field, Coordinates coords) : field(field), coords(coords) {};
+	ScannerCreator(GameField& field, Coordinates coords);
 	Ability* createAbility() override;
 	Abilities getCreatorType() override;
 };

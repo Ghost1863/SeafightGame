@@ -8,7 +8,7 @@ private:
 	GameField& field;
 	Coordinates coords;
 public:
-	DoubleDamage(GameField& field, Coordinates coords) :field(field), coords(coords) {};
+	DoubleDamage(GameField& field, Coordinates coords);	
 	AbilityResult useAbility() override final;
 };
 

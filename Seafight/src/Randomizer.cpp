@@ -30,7 +30,6 @@ bool Randomizer::getRandomBool() {
 }
 
 void Randomizer::giveRandomAbilityCreator(AbilityManager& abilityManager) {
-    std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
     int randomNumber = gen() % 3 + 1;
     switch (randomNumber)
     {

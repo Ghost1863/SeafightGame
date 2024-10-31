@@ -92,7 +92,8 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 				throw ShipsIntersectionException();
 		}
 		ship->getSegment(0)->coord = Coordinates{coords.x ,coords.y};
-		field[coords.x + coords.y * width].shipSegment = ship->getSegment(0);
+		//field[coords.x + coords.y * width].shipSegment = ship->getSegment(0);
+		field[coords.x + (coords.y) * width].segmentIndex = 0;
 		field[coords.x + (coords.y) * width].value = CellValue::ShipSegment;
 		field[coords.x + (coords.y) * width].ship = ship;
 	}
@@ -108,8 +109,9 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 		for (int i = 1; i < ship->getLength(); i++)
 		{
 			ship->getSegment(i)->coord = Coordinates{ coords.x ,coords.y + i };
-			field[coords.x + (coords.y + i) * width].shipSegment = ship->getSegment(i);
+			//field[coords.x + (coords.y + i) * width].shipSegment = ship->getSegment(i);
 			field[coords.x + (coords.y + i) * width].value = CellValue::ShipSegment;
+			field[coords.x + (coords.y + i) * width].segmentIndex = i;
 			field[coords.x + (coords.y + i) * width].ship = ship;
 		}
 	}
@@ -118,8 +120,9 @@ void GameField::setShip(Coordinates coords, Ship* ship, bool isVertical) {
 		for (int i = 1; i < ship->getLength(); i++)
 		{
 			ship->getSegment(i)->coord = Coordinates{ coords.x + i,coords.y };
-			field[coords.x + i + (coords.y * width)].shipSegment = ship->getSegment(i);
+			//field[coords.x + i + (coords.y * width)].shipSegment = ship->getSegment(i);
 			field[coords.x + i + (coords.y * width)].value = CellValue::ShipSegment;
+			field[coords.x + i + (coords.y * width)].segmentIndex = i;
 			field[coords.x + i + (coords.y * width)].ship = ship;
 		}
 	}
@@ -139,7 +142,7 @@ bool GameField::attackCell(Coordinates coords) {
 		break;
 	}
 	case CellValue::ShipSegment:{
-		if (cell.shipSegment->handleDamage()) {
+		if (cell.ship->getSegment(cell.segmentIndex)->handleDamage()) {
 			if (surroundShipIfDestroyed(&cell)) {
 				return true;
 			}

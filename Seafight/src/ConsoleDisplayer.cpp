@@ -58,7 +58,7 @@ inline void ConsoleDisplayer::drawCell(FieldCell cell, bool isShown) const noexc
 	}
 	else {
 		if (cell.value == CellValue::ShipSegment) {
-			drawShipSegment(cell.shipSegment->status);
+			drawShipSegment(cell.ship->getSegment(cell.segmentIndex)->status);
 		}
 		else {
 			drawEmptyCell(cell.value);
