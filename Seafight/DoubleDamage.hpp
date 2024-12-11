@@ -9,7 +9,7 @@ private:
 	bool isCoordsRequired;
 public:
 	DoubleDamage(int& currentDamage);
-	AbilityResult useAbility() override final;
+	std::unique_ptr<AbilityResult> useAbility() override final;
 };
 
 #endif

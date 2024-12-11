@@ -28,12 +28,12 @@ public:
 	void displayShipsInfo(ShipManager& sm)const noexcept;
 	void displayAbilities(AbilityManager& am) const noexcept;
 	void displayException(std::exception& e);
-	void displayAttackOrAbilityChoice();
 	void displayWaitingCoordinatesInput();
-	void displayUnknownCommandMessage();
-	void displaySegmentWasFoundMessage();
-	void displaySegmentWasNotFoundMessage();
 	void displayGameOverMessage();
+	void displayVictoryMessage(int round);
+	void displayString(const std::string s) const noexcept;
+	void displayColoredString(const std::string s, int num);
+
 };
 
 #endif

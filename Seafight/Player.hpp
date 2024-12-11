@@ -11,8 +11,7 @@ struct User {
 	ShipManager shipManager;
 	AbilityManager abilityManager;
 	Randomizer randomizer;
-	User(GameField& field, AbilityManager& abilityManager,ShipManager& sm,int currentDamage);
-	int currentDamage;
+	User(GameField& field, AbilityManager& abilityManager,ShipManager& sm);
 	User();
 };
 

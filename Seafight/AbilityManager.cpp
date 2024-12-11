@@ -67,10 +67,10 @@ void AbilityManager::checkAbilitiesEmpty() {
     }
 }
 
-AbilityResult AbilityManager::useAbility(UserParams& params) {
+std::unique_ptr<AbilityResult> AbilityManager::useAbility(UserParams& params) {
     checkAbilitiesEmpty();
     Ability* curAbility = creators.front()->createAbility(params);
-    AbilityResult result = curAbility->useAbility();
+    std::unique_ptr<AbilityResult> result = curAbility->useAbility();
     delete(curAbility);
     return result;
 }

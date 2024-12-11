@@ -22,7 +22,7 @@ public:
     void addRandomAbilityCreator();
     void addAbilityCreator(AbilityCreator* creator);
     void popAbilityCreator();
-    AbilityResult useAbility(UserParams& params); 
+    std::unique_ptr<AbilityResult> useAbility(UserParams& params);
 };
 
 #endif

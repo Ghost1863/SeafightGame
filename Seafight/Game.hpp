@@ -9,29 +9,34 @@
 #include "InputHandler.hpp"
 #include "Player.hpp"
 #include "GameState.hpp"
+#include "GameLoader.hpp"
+#include "GameSaver.hpp"
+#include "UserParams.hpp"
+#include "GameObserver.hpp"
 
 class Game {
 private:
+    std::shared_ptr<int> currentRound;
     std::shared_ptr<User> user;
     std::shared_ptr<Bot> bot;
-    GameState* state;
-    bool isUserTurn;
-    bool wasAbilityUsed;
-    int currentRound;
+    GameState state;
+    UserParams params;
+    std::vector <GameObserver*> observers;
 public:
 	Game();
-    void saveGame(const std::string& filename);
-    void loadGame(const std::string& filename);
+    void saveGame();
+    void loadGame();
 
+    void makeBotTurn();
     void makeUserAbilityTurn();
     void makeUserAttackTurn();
-    void makeUserTurn();
-    void makeBotTurn();
-    void makeTurn();
 
+    void addObserver(GameObserver* observer);
     void startNewRound();
     void startNewGame();
 
+    UserParams& getUserParams();
+    GameState& getState();
 };
 
 #endif

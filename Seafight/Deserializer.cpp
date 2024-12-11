@@ -1,34 +1,27 @@
 #include "Deserializer.hpp"
+#include <set>
 
 Deserializer::Deserializer(nlohmann::json& j) : j(j) {};
 
 void Deserializer::from_json(ShipManager& shipManager, std::string key) {
-    std::vector<int> sizes;
+
     const auto& jsonShipManager = j.at(key);
-    for (const auto& shipJson : jsonShipManager.items()) {
-        sizes.push_back(shipJson.value().at("length").get<int>());
-    }
-    shipManager = ShipManager(sizes);
 
-    for (const auto& shipJson : jsonShipManager.items()) {
-        std::string shipKey = shipJson.key();
-        int shipIndex = std::stoi(shipKey.substr(4)); 
-        Ship& ship = shipManager.getShip(shipIndex);
-        const auto& shipData = shipJson.value();
+    for (const auto& shipJson : jsonShipManager) {
+        Ship ship(shipJson["length"]);
+        ship.setIsPlaced(shipJson["isPlaced"]);
+        ship.setIsVertical(shipJson["isVertical"]);
+        ship.setIsDestroyed(shipJson["isDestroyed"]);
 
-        ship.setIsPlaced(shipData.at("isPlaced").get<bool>());
-        ship.setIsVertical(shipData.at("isVertical").get<bool>());
-        ship.setIsDestroyed(shipData.at("isDestroyed").get<bool>());
-
-        const auto& segmentsArray = shipData.at("segments");
-        for (size_t j = 0; j < segmentsArray.size(); ++j) {
-            ShipSegment* segment = ship.getSegment(j);
-            const auto& segmentJson = segmentsArray[j];
-
-            segment->status = segmentJson.at("status").get<SegmentStatus>();
-            segment->coord.x = segmentJson.at("x").get<int>();
-            segment->coord.y = segmentJson.at("y").get<int>();
+        int i = 0;
+        for (const auto& segmentJson : shipJson["segments"]) {
+            auto segment=ship.getSegment(i);
+            segment->status = segmentJson["status"];
+            segment->coord.x = segmentJson["x"];
+            segment->coord.y = segmentJson["y"];
+            i++;
         }
+        shipManager.addShip(ship);
     }
 }
 
@@ -58,5 +51,56 @@ void Deserializer::from_json(AbilityManager& abilityManager, std::string key){
        else if (abilityJson.get<std::string>() == "Scanner") {
            abilityManager.addAbilityCreator(new ScannerCreator());
        }
+    }
+}
+
+void Deserializer::from_json(int& number, std::string key){
+    number = j[key];
+}
+
+bool Deserializer::checkIsValid() {
+    auto storedChecksum = j["checksum"];
+    j.erase("checksum");
+    std::string loadedJsonStr = j.dump();
+    std::hash<std::string> hashFn;
+    auto checksum = hashFn(loadedJsonStr);
+    if (checksum != storedChecksum) {
+        return false;
+    }
+    return true;
+}
+
+void Deserializer::from_json(std::map<char, GameCommand>& settings) {
+    if (j.find("settings") == j.end()) {
+        throw std::invalid_argument("Key 'settings' not found in JSON");
+    }
+    auto& settings_json = j["settings"];
+    std::set<char> unique_keys;
+    std::set<int> unique_values;
+
+    for (auto& item : settings_json.items()) {
+        std::string key_str = item.key();
+        if (key_str.size() != 1) {
+            throw std::invalid_argument("Invalid key in JSON: " + key_str);
+        }
+        char key = key_str[0];
+        if (unique_keys.find(key) != unique_keys.end()) {
+            throw std::invalid_argument("Duplicate key in JSON: " + key_str);
+        }
+        unique_keys.insert(key);
+        int value = item.value().get<int>();
+        if (value < 1 || value > 6) {
+            throw std::invalid_argument("Invalid GameCommand value: " + std::to_string(value));
+        }
+
+        if (unique_values.find(value) != unique_values.end()) {
+            throw std::invalid_argument("Duplicate GameCommand value: " + std::to_string(value));
+        }
+        unique_values.insert(value);
+
+        settings[key] = static_cast<GameCommand>(value);
+        if (settings.size() != 6) {
+            throw std::invalid_argument("Invalid settings");
+        }
     }
 }

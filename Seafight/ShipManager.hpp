@@ -14,6 +14,7 @@ public:
 
     int getShipsAmount();
     bool allShipsDestroyed();
+    void addShip(Ship& ship);
     Ship& getShip(int index);
 
 };

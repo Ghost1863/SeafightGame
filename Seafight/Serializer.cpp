@@ -4,12 +4,12 @@
 Serializer::Serializer(nlohmann::json& j) : j(j) {};
 
 void Serializer::to_json(ShipManager& shipManager, std::string key) {
-    nlohmann::json jsonShipManager = nlohmann::json{};
+    nlohmann::json jsonShipManager = nlohmann::json::array();
 
     for (int i = 0; i < shipManager.getShipsAmount(); i++) {
         Ship& ship = shipManager.getShip(i);
-        std::string shipKey = "ship" + std::to_string(i);
-        jsonShipManager[shipKey] = {
+       // std::string shipKey = "ship" + std::to_string(i);
+        nlohmann::json shipJson = {
             {"length", ship.getLength()},
             {"isPlaced", ship.getIsPlaced()},
             {"isVertical", ship.getIsVertical()},
@@ -18,12 +18,13 @@ void Serializer::to_json(ShipManager& shipManager, std::string key) {
         };
 
         for (int jj = 0; jj < ship.getLength(); jj++) {
-            jsonShipManager[shipKey]["segments"].push_back({
+            shipJson["segments"].push_back({
                 {"status", ship.getSegment(jj)->status},
                 {"x", ship.getSegment(jj)->coord.x},
                 {"y", ship.getSegment(jj)->coord.y}
                 });
         }
+        jsonShipManager.push_back(shipJson);
     }
 
     j[key] = jsonShipManager;
@@ -55,4 +56,14 @@ void Serializer::to_json(AbilityManager& abilityManager, std::string key){
         jsonAbilityManager.push_back(abilityManager.getAbilityCreator(i).accept(&printer));
     }
     j[key] = jsonAbilityManager;
+}
+
+void Serializer::to_json(int number, std::string key) {
+    j[key] = number;
+}
+
+void Serializer::hashFile() {
+    std::string jsonStr = j.dump();
+    std::hash<std::string> hashFn;
+    j["checksum"] = hashFn(jsonStr);
 }

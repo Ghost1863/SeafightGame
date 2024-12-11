@@ -10,7 +10,7 @@ private:
 	bool isCoordsRequired;
 public:
 	RandomHit(ShipManager& shipManager, GameField& field);
-	AbilityResult useAbility()  override final;
+	std::unique_ptr<AbilityResult> useAbility()  override final;
 };
 
 #endif

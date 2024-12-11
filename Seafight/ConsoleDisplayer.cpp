@@ -198,29 +198,8 @@ void ConsoleDisplayer::displayException(std::exception& e) {
 	std::cerr << "Exception caught: " << e.what() << std::endl;
 }
 
-void ConsoleDisplayer::displayAttackOrAbilityChoice() {
-	setColor(35);
-	std::cout << "Press 1 to attack\nPress 2 to use ability\n\n";
-	resetColor();
-}
-
 void ConsoleDisplayer::displayWaitingCoordinatesInput() {
 	std::cout << "Enter coordinates with space: ";
-}
-
-void ConsoleDisplayer::displayUnknownCommandMessage() {
-	std::cout << "Unknown command\n";
-}
-
-void ConsoleDisplayer::displaySegmentWasFoundMessage() {
-	setColor(32);
-	std::cout << "Segment/Segments were found\n";
-	resetColor();
-}
-void ConsoleDisplayer::displaySegmentWasNotFoundMessage() {
-	setColor(31);
-	std::cout << "Segment/Segments were not found\n";
-	resetColor();
 }
 
 void ConsoleDisplayer::displayGameOverMessage() {
@@ -235,4 +214,22 @@ void ConsoleDisplayer::displayGameOverMessage() {
 	std::cout << std::endl;
 	resetColor();
 }
+
+void ConsoleDisplayer::displayVictoryMessage(int round) {
+	setColor(32);
+	std::cout << "Bot was destroyed, Well Done!!!\n";
+	resetColor();
+	std::cout << "Starting round " << round << std::endl;
+}
+
+void ConsoleDisplayer::displayString(const std::string s)  const noexcept {
+	std::cout << s << "\n";
+}
+
+void ConsoleDisplayer::displayColoredString(const std::string s, int num) {
+	setColor(num);
+	std::cout << s << "\n";
+	resetColor();
+}
+
 

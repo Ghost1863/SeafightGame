@@ -2,14 +2,15 @@
 #define ABILITY_HPP
 
 #include "UserParams.hpp"
+#include "AbilityResult.hpp"
 #include<chrono>
 #include<random>
 
-enum class AbilityResult { ShipDestroyed, SegmentDetected,SegmentNotFound,ShipNotDestroyed };
+//enum class AbilityResult { ShipDestroyed, SegmentDetected,SegmentNotFound,ShipNotDestroyed };
 
 class Ability {
 public:
-	virtual AbilityResult useAbility() = 0;
+	virtual std::unique_ptr<AbilityResult> useAbility() = 0;
 	virtual ~Ability() {}
 };
 

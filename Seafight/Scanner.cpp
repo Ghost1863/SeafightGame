@@ -4,7 +4,7 @@ Scanner::Scanner(GameField& field, Coordinates& coords)
 	:field(field), coords(coords),isCoordsRequired(false) {};
 
 
-AbilityResult Scanner::useAbility() {
+std::unique_ptr<AbilityResult> Scanner::useAbility() {
 	std::vector <Coordinates> coordsForScan{ coords, Coordinates{ coords.x + 1,coords.y },
 		Coordinates{ coords.x ,coords.y+1 }, Coordinates{ coords.x + 1,coords.y+1 }};
 	for (auto& curCoords : coordsForScan) {
@@ -14,9 +14,9 @@ AbilityResult Scanner::useAbility() {
 	}
 	for (auto& curCoords : coordsForScan) {
 		if (field.getFieldCell(curCoords).value == CellValue::ShipSegment)
-			return AbilityResult::SegmentDetected;
+			return std::make_unique<SegmentDetectedResult>();
 	}
-	return AbilityResult::SegmentNotFound;
+	return std::make_unique<SegmentNotFoundResult>();
 }
 
 

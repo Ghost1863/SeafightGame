@@ -10,7 +10,7 @@ private:
 	bool isCoordsRequired;
 public:
 	Scanner(GameField& field, Coordinates& coords);
-	AbilityResult useAbility() override final;
+	std::unique_ptr<AbilityResult> useAbility() override final;
 };
 
 #endif

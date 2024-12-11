@@ -1,94 +1,54 @@
 #include "Game.hpp"
-#include "Player.hpp"
-#include "UserParams.hpp"
 
-Game::Game() {
-	isUserTurn = true;
-	currentRound = 1;
-	this->user = std::make_shared<User>();
-	this->bot = std::make_shared<Bot>();
-	this->state= new GameState(user, bot, currentRound);
+Game::Game() :bot(std::make_shared<Bot>()), user(std::make_shared<User>()),
+params(UserParams(bot->field, bot->shipManager)), currentRound(std::make_shared<int>(1)),
+state(GameState(user, bot, currentRound)) {};
 
-	user->abilityManager.initialiseStartCreators();
-	for (int i = 0; i < user->shipManager.getShipsAmount(); i++) {
-		Randomizer().placeShipRandomly(user->field, &user->shipManager.getShip(i));
-	}
-	for (int i = 0; i < bot->shipManager.getShipsAmount(); i++) {
-		Randomizer().placeShipRandomly(bot->field, &bot->shipManager.getShip(i));
-	}
-}
+
 
 void Game::makeUserAbilityTurn() {
-	Coordinates userCoords{ -1,-1 };
-	UserParams params(bot->field, bot->shipManager, userCoords,user->currentDamage);
-	ConsoleDisplayer displayer;
-	InputHandler inputHandler;
-	bool abilitySuccess = false;
-
-	while (!abilitySuccess) {
-		try {
-			if (user->abilityManager.getAbilityCreator(0).getIsCoordsRequired()) {
-				displayer.displayWaitingCoordinatesInput();
-				params.coords = inputHandler.handleCoordsInput();
-			}
-			AbilityResult result = user->abilityManager.useAbility(params);
-			switch (result)
-			{
-			case AbilityResult::ShipDestroyed:
-				user->abilityManager.addRandomAbilityCreator();
-				break;
-			case AbilityResult::SegmentDetected:
-				displayer.displaySegmentWasFoundMessage();
-				break;
-			case AbilityResult::SegmentNotFound:
-				displayer.displaySegmentWasNotFoundMessage();
-				break;
-			default:
-				break;
-			}
-			user->abilityManager.popAbilityCreator();
-			abilitySuccess = true;
-		}
-		catch (NoAbilitiesException& e) {
-			displayer.displayException(e);
-			break;
-		}
-		catch (OutOfBoundsException& e) {
-			displayer.displayException(e);
-		}
+	std::unique_ptr<AbilityResult> result = user->abilityManager.useAbility(params);
+	if (dynamic_cast<ShipDestroyedResult*>(result.get())) {
+		user->abilityManager.addRandomAbilityCreator();
 	}
-}
+	user->abilityManager.popAbilityCreator();
+	for (auto observer : observers) {
+		observer->userAbilityTurnEnd(result->getMessage());
+	}
 
-void Game:: makeUserAttackTurn() {
-	ConsoleDisplayer displayer;
-	InputHandler inputHandler;
-	Coordinates userCoords{ -1,-1 };
-	UserParams params(bot->field, bot->shipManager, userCoords,user->currentDamage);
-	displayer.displayWaitingCoordinatesInput();
-	bool attackSuccess = false;
-	while (!attackSuccess) {
-		try {
-			params.coords = inputHandler.handleCoordsInput();
-			for (int i = 0; i < params.currentDamage; i++)
-			{
-				if (params.field.attackCell(params.coords)) {
-					user->abilityManager.addRandomAbilityCreator();
-				}
-			}
-			params.currentDamage = 1;
-			attackSuccess = true;
-		}
-		catch (OutOfBoundsException& e) {
-			displayer.displayException(e);
-			displayer.displayWaitingCoordinatesInput();
+	//user win
+	if (bot->shipManager.allShipsDestroyed()) {
+		for (auto observer : observers) {
+			observer->userWin();
+			startNewRound();
 		}
 	}
 }
 
 
+void Game::makeUserAttackTurn() {
+	for (int i = 0; i < params.currentDamage; i++)
+	{
+		if (params.field.attackCell(params.coords)) {
+			user->abilityManager.addRandomAbilityCreator();
+		}
+	}
+	params.currentDamage = 1;
+		
+	for (auto observer : observers) {
+		observer->userAttackTurnEnd();
+	}
 
-void Game::makeBotTurn() {
-	Bot bot(user->field, user->shipManager);
+	//user win
+	if (bot->shipManager.allShipsDestroyed()) {
+		for (auto observer : observers) {
+			observer->userWin();
+			startNewRound();
+		}
+	}
+}
+
+void Game::makeBotTurn() {;
 	bool attackSuccess = false;
 	while (!attackSuccess) {
 		Coordinates coords = Randomizer().getRandomCoordinates();
@@ -99,66 +59,53 @@ void Game::makeBotTurn() {
 			attackSuccess = true;
 		}
 	}
-}
-
-void Game::makeTurn() {
-	if (isUserTurn)
-	{
-		ConsoleDisplayer().displayTwoFields(user->field, bot->field);
-		ConsoleDisplayer().displayAbilities(user->abilityManager);
-		ConsoleDisplayer().displayAttackOrAbilityChoice();
-		int choice = InputHandler().handleAttackorAbility();
-		if (choice==2 ) {
-			makeUserAbilityTurn();
-			//wasAbilityUsed = true;
-			makeUserAttackTurn();
-			isUserTurn = false;
-		}
-		else {
-			makeUserAttackTurn();
-			isUserTurn = false;
-		}
-		ConsoleDisplayer().displayTwoFields(user->field,bot->field);
-    }
-	else {
-		std::cout << "Bot turn\n";
-		makeBotTurn();
-		ConsoleDisplayer().displayTwoFields(user->field, bot->field);
-		isUserTurn = true;
+	for (auto observer : observers) {
+		observer->botTurnEnd();
 	}
-	std::cout << "Press 'q' to quit, 's' to save game, 'l' to load game,'p' to play" << std::endl;
+
+	//bot win
+	if (user->shipManager.allShipsDestroyed()) {
+		for (auto observer : observers) {
+			observer->botWin();
+		}
+		startNewGame();
+	}
 }
 
 void Game::startNewGame() {
-	currentRound = 1;
+	*currentRound = 1;
 	user = std::make_shared<User>();
-	user->abilityManager.initialiseStartCreators();
-	for (int i = 0; i < user->shipManager.getShipsAmount(); i++) {
-		Randomizer().placeShipRandomly(user->field, &user->shipManager.getShip(i));
+}
+
+void Game::startNewRound() {
+	*currentRound += 1;
+	bot = std::make_shared<Bot>();
+}
+
+void Game::saveGame() {
+	GameSaver saver(this->state);
+	saver.save();
+}
+
+void Game::loadGame() {
+	GameLoader loader(this->state);
+	loader.load();
+	*currentRound = state.getCurrentRound();
+	for (auto observer : observers) {
+		observer->gameLoadSuccess();
 	}
 }
 
-
-void Game::startNewRound() {
-    bot->shipManager = ShipManager({ 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 });
-    bot->field = GameField(10, 10);
-	currentRound += 1;
+void Game::addObserver(GameObserver* observer) {
+	if (observer != nullptr) {
+		observers.push_back(observer);
+	}
 }
 
-void Game::saveGame(const std::string& filename) {
-	state->save(filename);
+UserParams& Game::getUserParams() {
+	return params;
 }
 
-void Game::loadGame(const std::string& filename) {
-	auto tempUser = std::make_shared<User>();
-	auto tempBot = std::make_shared<Bot>();
-	GameState tempGameState(tempUser, tempBot, currentRound);
-
-	tempGameState.load(filename);
-
-	delete state;
-	state = new GameState(tempGameState);
-
-	user = state->getUser();
-	bot = state->getBot();
+GameState& Game::getState() {
+	return state;
 }

@@ -26,3 +26,7 @@ Ship& ShipManager::getShip(int index) {
     return ships[index];
 }
 
+void ShipManager::addShip(Ship& ship) {
+    ships.push_back(ship);
+}
+

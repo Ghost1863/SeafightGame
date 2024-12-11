@@ -4,7 +4,7 @@ DoubleDamage::DoubleDamage(int& currentDamage)
 	:currentDamage(currentDamage),isCoordsRequired(false) {};
 
 
-AbilityResult DoubleDamage::useAbility() {
+std::unique_ptr<AbilityResult> DoubleDamage::useAbility() {
 	currentDamage++;
-	return AbilityResult::ShipNotDestroyed;
+	return std::make_unique<DamageIncreasedResult>();
 }

@@ -11,14 +11,12 @@ class GameState {
 private:
 	std::shared_ptr<User> user;
 	std::shared_ptr<Bot> bot;
-	int currentRound;
+	std::shared_ptr<int> currentRound;
 public:
-	GameState(std::shared_ptr<User> user, std::shared_ptr<Bot> bot, int& current_round);
-;	void save(const std::string& filename);
-	void load(const std::string& filename);
+	GameState(std::shared_ptr<User> user, std::shared_ptr<Bot> bot, std::shared_ptr<int> currentRound);
 	std::shared_ptr<User> getUser();
 	std::shared_ptr<Bot> getBot();
 	int getCurrentRound();
-	void placeShipsBack(ShipManager& shipManager,GameField& field);
+	void setCurrentRound(int r);
 };
 #endif 

@@ -6,9 +6,9 @@
 struct UserParams {
 	GameField& field;
 	ShipManager& shipManager;
-	Coordinates& coords;
-	int& currentDamage;
-	UserParams(GameField& field, ShipManager& sm,Coordinates& coords,int& currentDamage);
+	Coordinates coords;
+	int currentDamage;
+	UserParams(GameField& field, ShipManager& sm);
 };
 
 #endif 

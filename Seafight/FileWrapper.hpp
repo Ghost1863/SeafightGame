@@ -3,13 +3,15 @@
 
 #include "nlohmann/json.hpp"
 #include "FileOpeningException.hpp"
+#include "FileWasDamagedException.hpp"
 #include <iostream>
 #include <fstream>
 
 class FileWrapper {
+private:
     mutable std::fstream file;
 public:
-    FileWrapper(const std::string& filename);
+    FileWrapper(const std::string& filename, std::ios::openmode mode);
 
     ~FileWrapper();
 

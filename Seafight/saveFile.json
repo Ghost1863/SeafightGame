@@ -1,29 +1,23 @@
 {
     "abilityManager": [
-        "Scanner"
+        "Random Hit",
+        "Scanner",
+        "Double Damage"
     ],
     "botField": {
         "height": 10,
         "status": [
             0,
-            1,
             0,
             0,
             0,
             0,
             0,
-            1,
-            1,
-            1,
             0,
             0,
             0,
             0,
-            1,
             0,
-            0,
-            1,
-            1,
             1,
             0,
             0,
@@ -103,61 +97,32 @@
             0,
             0,
             0,
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
         ],
         "value": [
             0,
+            0,
+            0,
             2,
             0,
             0,
+            2,
+            2,
             0,
             0,
             0,
             1,
-            2,
-            1,
-            0,
-            0,
-            0,
             0,
             2,
-            0,
-            0,
-            1,
-            1,
-            1,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            0,
-            2,
-            0,
             0,
             0,
             0,
@@ -171,21 +136,8 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             2,
             0,
-            0,
-            2,
-            0,
-            0,
-            2,
-            2,
-            2,
             0,
             0,
             0,
@@ -198,6 +150,22 @@
             0,
             0,
             0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            2,
             0,
             0,
             0,
@@ -205,13 +173,47 @@
             0,
             0,
             0,
-            1,
-            2
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            2,
+            2,
+            0,
+            2,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
         ],
         "width": 10
     },
-    "botShipManager": {
-        "ship0": {
+    "botShipManager": [
+        {
             "isDestroyed": false,
             "isPlaced": true,
             "isVertical": true,
@@ -219,18 +221,100 @@
             "segments": [
                 {
                     "status": 0,
-                    "x": 6,
+                    "x": 3,
+                    "y": 0
+                },
+                {
+                    "status": 0,
+                    "x": 3,
+                    "y": 1
+                },
+                {
+                    "status": 0,
+                    "x": 3,
                     "y": 2
                 },
                 {
                     "status": 0,
-                    "x": 6,
+                    "x": 3,
                     "y": 3
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 3,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 2,
+                    "y": 7
                 },
                 {
-                    "status": 1,
+                    "status": 0,
+                    "x": 3,
+                    "y": 7
+                },
+                {
+                    "status": 0,
+                    "x": 4,
+                    "y": 7
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": true,
+            "length": 3,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 8,
+                    "y": 6
+                },
+                {
+                    "status": 0,
+                    "x": 8,
+                    "y": 7
+                },
+                {
+                    "status": 0,
+                    "x": 8,
+                    "y": 8
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 2,
+            "segments": [
+                {
+                    "status": 0,
                     "x": 6,
-                    "y": 4
+                    "y": 0
+                },
+                {
+                    "status": 0,
+                    "x": 7,
+                    "y": 0
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 2,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 5,
+                    "y": 5
                 },
                 {
                     "status": 0,
@@ -239,161 +323,79 @@
                 }
             ]
         },
-        "ship1": {
+        {
             "isDestroyed": false,
             "isPlaced": true,
             "isVertical": true,
-            "length": 3,
+            "length": 2,
             "segments": [
                 {
-                    "status": 2,
-                    "x": 4,
-                    "y": 1
+                    "status": 0,
+                    "x": 1,
+                    "y": 4
                 },
                 {
                     "status": 0,
-                    "x": 4,
-                    "y": 2
-                },
-                {
-                    "status": 0,
-                    "x": 4,
-                    "y": 3
+                    "x": 1,
+                    "y": 5
                 }
             ]
         },
-        "ship2": {
+        {
             "isDestroyed": false,
             "isPlaced": true,
             "isVertical": false,
-            "length": 3,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 9,
+                    "y": 1
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 7,
+                    "y": 2
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 8,
+                    "y": 4
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 1,
             "segments": [
                 {
                     "status": 0,
                     "x": 6,
                     "y": 7
-                },
-                {
-                    "status": 0,
-                    "x": 7,
-                    "y": 7
-                },
-                {
-                    "status": 0,
-                    "x": 8,
-                    "y": 7
-                }
-            ]
-        },
-        "ship3": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 2,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 3,
-                    "y": 7
-                },
-                {
-                    "status": 0,
-                    "x": 3,
-                    "y": 8
-                }
-            ]
-        },
-        "ship4": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 2,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 0,
-                    "y": 6
-                },
-                {
-                    "status": 0,
-                    "x": 0,
-                    "y": 7
-                }
-            ]
-        },
-        "ship5": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 2,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 9,
-                    "y": 3
-                },
-                {
-                    "status": 0,
-                    "x": 9,
-                    "y": 4
-                }
-            ]
-        },
-        "ship6": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 1,
-            "segments": [
-                {
-                    "status": 1,
-                    "x": 1,
-                    "y": 0
-                }
-            ]
-        },
-        "ship7": {
-            "isDestroyed": true,
-            "isPlaced": true,
-            "isVertical": false,
-            "length": 1,
-            "segments": [
-                {
-                    "status": 2,
-                    "x": 8,
-                    "y": 0
-                }
-            ]
-        },
-        "ship8": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 1,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 9,
-                    "y": 9
-                }
-            ]
-        },
-        "ship9": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 1,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 1,
-                    "y": 4
                 }
             ]
         }
-    },
-    "currentDamage": 1,
-    "currentRound": 0,
+    ],
+    "checksum": 10866053456813129447,
+    "currentRound": 1,
     "userField": {
         "height": 10,
         "status": [
@@ -408,33 +410,6 @@
             0,
             0,
             0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
             0,
             0,
             0,
@@ -454,7 +429,34 @@
             0,
             0,
             1,
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -499,31 +501,8 @@
             0
         ],
         "value": [
-            0,
-            0,
-            0,
             2,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             2,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
             2,
             0,
             0,
@@ -532,31 +511,7 @@
             0,
             0,
             0,
-            2,
             0,
-            1,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            0,
-            2,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
             0,
             0,
             0,
@@ -573,16 +528,12 @@
             0,
             0,
             0,
-            0,
-            2,
-            2,
             2,
             0,
+            2,
             0,
             0,
-            0,
-            0,
-            0,
+            2,
             0,
             0,
             0,
@@ -592,74 +543,79 @@
             2,
             2,
             0,
+            2,
+            0,
             0,
             0,
             0,
             2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0
         ],
         "width": 10
     },
-    "userShipManager": {
-        "ship0": {
+    "userShipManager": [
+        {
             "isDestroyed": false,
             "isPlaced": true,
-            "isVertical": true,
+            "isVertical": false,
             "length": 4,
             "segments": [
                 {
                     "status": 0,
-                    "x": 3,
-                    "y": 0
+                    "x": 4,
+                    "y": 7
                 },
-                {
-                    "status": 0,
-                    "x": 3,
-                    "y": 1
-                },
-                {
-                    "status": 0,
-                    "x": 3,
-                    "y": 2
-                },
-                {
-                    "status": 0,
-                    "x": 3,
-                    "y": 3
-                }
-            ]
-        },
-        "ship1": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 3,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 9,
-                    "y": 2
-                },
-                {
-                    "status": 0,
-                    "x": 9,
-                    "y": 3
-                },
-                {
-                    "status": 0,
-                    "x": 9,
-                    "y": 4
-                }
-            ]
-        },
-        "ship2": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": false,
-            "length": 3,
-            "segments": [
                 {
                     "status": 0,
                     "x": 5,
@@ -677,115 +633,157 @@
                 }
             ]
         },
-        "ship3": {
+        {
             "isDestroyed": false,
             "isPlaced": true,
             "isVertical": true,
-            "length": 2,
-            "segments": [
-                {
-                    "status": 1,
-                    "x": 1,
-                    "y": 1
-                },
-                {
-                    "status": 0,
-                    "x": 1,
-                    "y": 2
-                }
-            ]
-        },
-        "ship4": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 2,
+            "length": 3,
             "segments": [
                 {
                     "status": 0,
-                    "x": 5,
-                    "y": 1
+                    "x": 2,
+                    "y": 2
                 },
                 {
-                    "status": 1,
-                    "x": 5,
-                    "y": 2
+                    "status": 0,
+                    "x": 2,
+                    "y": 3
+                },
+                {
+                    "status": 0,
+                    "x": 2,
+                    "y": 4
                 }
             ]
         },
-        "ship5": {
+        {
             "isDestroyed": false,
             "isPlaced": true,
             "isVertical": false,
-            "length": 2,
+            "length": 3,
             "segments": [
                 {
                     "status": 0,
                     "x": 0,
-                    "y": 9
+                    "y": 0
                 },
                 {
                     "status": 0,
                     "x": 1,
-                    "y": 9
+                    "y": 0
+                },
+                {
+                    "status": 0,
+                    "x": 2,
+                    "y": 0
                 }
             ]
         },
-        "ship6": {
+        {
             "isDestroyed": false,
             "isPlaced": true,
-            "isVertical": false,
-            "length": 1,
+            "isVertical": true,
+            "length": 2,
+            "segments": [
+                {
+                    "status": 1,
+                    "x": 9,
+                    "y": 2
+                },
+                {
+                    "status": 0,
+                    "x": 9,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": true,
+            "length": 2,
             "segments": [
                 {
                     "status": 0,
-                    "x": 6,
+                    "x": 7,
                     "y": 4
+                },
+                {
+                    "status": 0,
+                    "x": 7,
+                    "y": 5
                 }
             ]
         },
-        "ship7": {
+        {
             "isDestroyed": false,
             "isPlaced": true,
             "isVertical": true,
-            "length": 1,
+            "length": 2,
             "segments": [
                 {
                     "status": 0,
-                    "x": 6,
-                    "y": 9
-                }
-            ]
-        },
-        "ship8": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 1,
-            "segments": [
-                {
-                    "status": 0,
-                    "x": 1,
-                    "y": 4
-                }
-            ]
-        },
-        "ship9": {
-            "isDestroyed": false,
-            "isPlaced": true,
-            "isVertical": true,
-            "length": 1,
-            "segments": [
+                    "x": 9,
+                    "y": 5
+                },
                 {
                     "status": 0,
                     "x": 9,
                     "y": 6
                 }
             ]
-        }
-    }
-}                }
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": true,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 7,
+                    "y": 2
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": true,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 4,
+                    "y": 5
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": false,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 6,
+                    "y": 0
+                }
+            ]
+        },
+        {
+            "isDestroyed": false,
+            "isPlaced": true,
+            "isVertical": true,
+            "length": 1,
+            "segments": [
+                {
+                    "status": 0,
+                    "x": 0,
+                    "y": 4
+                }
             ]
         }
-    }
+    ]
 }

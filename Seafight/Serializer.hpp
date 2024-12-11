@@ -13,5 +13,7 @@ public:
     void to_json(ShipManager& shipManager, std::string key);
     void to_json(GameField& field, std::string key);
     void to_json(AbilityManager& abilityManager, std::string key);
+    void to_json(int number, std::string key);
+    void hashFile();
 };
 #endif 
